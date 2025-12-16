@@ -35,6 +35,12 @@ interface TransactionsDAO {
     @Query("SELECT month FROM transactionsmodel GROUP BY month")
     fun getMonths(): Flow<List<Int>>
 
+    @Query("SELECT market FROM transactionsmodel GROUP BY market")
+    fun getMarkets(): Flow<List<String>>
+
+    @Query("SELECT * FROM transactionsmodel WHERE market = :market")
+    fun getTransactionsByMarket(market: String): Flow<List<TransactionsModel>>
+
     @Query("SELECT * FROM transactionsmodel WHERE year = :year AND month = :month ORDER BY month")
     fun getMonthlyTransactions(year: Int,month: Int): Flow<List<TransactionsModel>>
 

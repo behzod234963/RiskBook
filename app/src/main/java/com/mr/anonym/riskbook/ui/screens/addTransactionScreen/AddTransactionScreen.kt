@@ -45,8 +45,8 @@ import com.mr.anonym.riskbook.data.model.TransactionsModel
 import com.mr.anonym.riskbook.presentation.managers.clipboardManager
 import com.mr.anonym.riskbook.presentation.managers.riskCalculator
 import com.mr.anonym.riskbook.ui.components.CircleButton
-import com.mr.anonym.riskbook.ui.components.colorSelector
 import com.mr.anonym.riskbook.ui.components.OutlinedTF
+import com.mr.anonym.riskbook.ui.components.colorSelector
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -65,9 +65,10 @@ fun AddTransactionScreen(
     val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
 //    Booleans
-    val isAmountCalculated = remember { mutableStateOf( false ) }
+    val isAmountCalculated = remember { mutableStateOf(false) }
 
 //    String
+    val marketValue = viewModel.marketValue
     val pairValue = viewModel.pairValue
     val riskPercentValue = viewModel.riskPercentValue
     val riskVolumeValue = viewModel.riskVolumeValue
@@ -97,7 +98,7 @@ fun AddTransactionScreen(
     val verticalScrollState = rememberScrollState()
     val refreshButtonInteractionSource = remember { MutableInteractionSource() }
     val isPressed by refreshButtonInteractionSource.collectIsPressedAsState()
-    val scale by animateFloatAsState( if ( isPressed ) 0.80f else 1f )
+    val scale by animateFloatAsState(if (isPressed) 0.80f else 1f)
 
 //    UI
     Scaffold(
@@ -112,56 +113,69 @@ fun AddTransactionScreen(
                 title = pairValue.value,
                 onBackClick = { navController.navigateUp() },
                 onSaveClick = {
-                    if ( id == -1 ){
-                        if ( isAmountCalculated.value ){
-                            if (pairValue.value.isNotEmpty()){
-                                val factory = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+                    if (id == -1) {
+                        if (isAmountCalculated.value) {
+                            if (
+                                pairValue.value.isNotEmpty() &&
+                                marketValue.value.isNotEmpty()
+                            ) {
+                                val factory =
+                                    SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
                                 val currentDate = factory.format(calendarInstance.time)
-                                viewModel.insertTransaction(TransactionsModel(
+                                viewModel.insertTransaction(
+                                    TransactionsModel(
+                                        market = marketValue.value,
+                                        pair = pairValue.value,
+                                        riskPercent = riskPercentValue.value,
+                                        riskVolume = if (riskVolumeValue.value.isNotEmpty()) riskVolumeValue.value.toInt() else 0,
+                                        entryPrice = if (entryValue.value.isNotEmpty()) entryValue.value.toDouble() else 0.0,
+                                        stopLoss = if (stopLossValue.value.isNotEmpty()) stopLossValue.value.toDouble() else 0.0,
+                                        takeProfit = if (takeProfitValue.value.isNotEmpty()) takeProfitValue.value.toDouble() else 0.0,
+                                        position = position.value,
+                                        margin = if (marginValue.value.isNotEmpty()) marginValue.value.toDouble() else 0.0,
+                                        leverage = leverageValue.value,
+                                        amount = amountValue.value,
+                                        commentForEntry = commentForEntryValue.value,
+                                        commentForTakeProfit = commentForTakeProfitValue.value,
+                                        finalConclusion = finalConclusionValue.value,
+                                        profit = if (profitValue.value.isNotEmpty()) profitValue.value.toDouble() else 0.0,
+                                        dateAdded = currentDate,
+                                        month = month,
+                                        year = year
+                                    )
+                                )
+                                navController.navigateUp()
+                            }
+                        }
+                    } else {
+                        if (
+                            pairValue.value.isNotEmpty() &&
+                            marketValue.value.isNotEmpty()
+                        ) {
+                            val month = calendarInstance.get(Calendar.MONTH)
+                            viewModel.insertTransaction(
+                                TransactionsModel(
+                                    id = modelID.value,
+                                    market = marketValue.value,
                                     pair = pairValue.value,
                                     riskPercent = riskPercentValue.value,
-                                    riskVolume = riskVolumeValue.value.toInt(),
-                                    entryPrice = entryValue.value.toDouble(),
-                                    stopLoss = stopLossValue.value.toDouble(),
-                                    margin = marginValue.value.toDouble(),
+                                    riskVolume = if ( riskVolumeValue.value.isNotEmpty() ) riskVolumeValue.value.toInt() else 0,
+                                    entryPrice = if (entryValue.value.isNotEmpty()) entryValue.value.toDouble() else 0.0,
+                                    stopLoss = if ( stopLossValue.value.isNotEmpty() ) stopLossValue.value.toDouble() else 0.0,
+                                    takeProfit = if (takeProfitValue.value.isNotEmpty()) takeProfitValue.value.toDouble() else 0.0,
+                                    position = position.value,
+                                    margin = if ( marginValue.value.isNotEmpty() ) marginValue.value.toDouble() else 0.0,
                                     leverage = leverageValue.value,
                                     amount = amountValue.value,
                                     commentForEntry = commentForEntryValue.value,
                                     commentForTakeProfit = commentForTakeProfitValue.value,
                                     finalConclusion = finalConclusionValue.value,
-                                    profit = if ( profitValue.value.isNotEmpty() ) profitValue.value.toDouble() else 0.0,
-                                    dateAdded = currentDate,
-                                    position = position.value,
-                                    takeProfit = if ( takeProfitValue.value.isNotEmpty() ) takeProfitValue.value.toDouble() else 0.0,
+                                    profit = if (profitValue.value.isNotEmpty()) profitValue.value.toDouble() else 0.0,
+                                    dateAdded = dateAdded.value,
                                     month = month,
                                     year = year
-                                ))
-                                navController.navigateUp()
-                            }
-                        }
-                    }else{
-                        if ( pairValue.value.isNotEmpty() ){
-                            val month = calendarInstance.get(Calendar.MONTH)
-                            viewModel.insertTransaction(TransactionsModel(
-                                id = modelID.value,
-                                pair = pairValue.value,
-                                riskPercent = riskPercentValue.value,
-                                riskVolume = riskVolumeValue.value.toInt(),
-                                entryPrice = entryValue.value.toDouble(),
-                                stopLoss = stopLossValue.value.toDouble(),
-                                margin = marginValue.value.toDouble(),
-                                leverage = marginValue.value,
-                                amount = amountValue.value,
-                                commentForEntry = commentForEntryValue.value,
-                                commentForTakeProfit = commentForTakeProfitValue.value,
-                                finalConclusion = finalConclusionValue.value,
-                                profit = if ( profitValue.value.isNotEmpty() ) profitValue.value.toDouble() else 0.0,
-                                dateAdded = dateAdded.value,
-                                position = position.value,
-                                takeProfit = if ( takeProfitValue.value.isNotEmpty() ) takeProfitValue.value.toDouble() else 0.0,
-                                month = month,
-                                year = year
-                            ))
+                                )
+                            )
                             navController.navigateUp()
                         }
                     }
@@ -177,6 +191,24 @@ fun AddTransactionScreen(
                 .verticalScroll(verticalScrollState)
                 .imePadding()
         ) {
+//            Market field
+            OutlinedTF(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp),
+                containerColor = colorSelector(0),
+                textColor = colorSelector(1),
+                borderColor = colorSelector(1),
+                fontFamily = iosFont,
+                isNumberField = false,
+                showTrailingIcon = true,
+                isSingleLine = true,
+                value = marketValue.value,
+                onValueChange = { viewModel.changeMarketValue(it) },
+                label = "Market",
+                onTrailingClick = { viewModel.changeMarketValue("") }
+            )
+            Spacer(Modifier.height(15.dp))
 //            Transaction pair field
             OutlinedTF(
                 modifier = Modifier
@@ -269,7 +301,7 @@ fun AddTransactionScreen(
                     showTrailingIcon = true,
                     isSingleLine = true,
                     value = stopLossValue.value,
-                    onValueChange = { viewModel.changeStopLossValue(it)},
+                    onValueChange = { viewModel.changeStopLossValue(it) },
                     label = "Stop-loss"
                 ) { viewModel.changeStopLossValue("") }
             }
@@ -278,7 +310,7 @@ fun AddTransactionScreen(
                 modifier = Modifier
                     .fillMaxWidth(),
 
-            ) {
+                ) {
 //                Position field
                 Column(
                     modifier = Modifier
@@ -287,7 +319,7 @@ fun AddTransactionScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Position: ${if ( position.value ) "Long" else "Short"}",
+                        text = "Position: ${if (position.value) "Long" else "Short"}",
                         color = colorSelector(1),
                         fontSize = 14.sp,
                         fontFamily = iosFont
@@ -314,7 +346,7 @@ fun AddTransactionScreen(
                         .height(60.dp),
                     containerColor = colorSelector(0),
                     textColor = colorSelector(1),
-                    borderColor = colorSelector(1  ),
+                    borderColor = colorSelector(1),
                     fontFamily = iosFont,
                     isNumberField = true,
                     showTrailingIcon = true,
@@ -352,7 +384,7 @@ fun AddTransactionScreen(
                         .height(60.dp),
                     containerColor = colorSelector(0),
                     textColor = colorSelector(1),
-                    borderColor = colorSelector(1  ),
+                    borderColor = colorSelector(1),
                     fontFamily = iosFont,
                     isNumberField = true,
                     showTrailingIcon = false,
@@ -388,7 +420,7 @@ fun AddTransactionScreen(
             Spacer(Modifier.height(15.dp))
 //            Position
             Text(
-                text = "Position: ${if ( position.value ) "Long" else "Short"}",
+                text = "Position: ${if (position.value) "Long" else "Short"}",
                 color = colorSelector(4),
                 fontSize = 16.sp,
                 fontFamily = iosFont
@@ -435,7 +467,11 @@ fun AddTransactionScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp)
-                    .border(width = 0.5.dp,color = colorSelector(6),shape = RoundedCornerShape(15.dp))
+                    .border(
+                        width = 0.5.dp,
+                        color = colorSelector(6),
+                        shape = RoundedCornerShape(15.dp)
+                    )
                     .background(color = colorSelector(0), shape = RoundedCornerShape(15.dp))
                     .padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -469,20 +505,22 @@ fun AddTransactionScreen(
                     buttonColor = colorSelector(4),
                     interactionSource = refreshButtonInteractionSource,
                     scale = scale,
-                    onClick = { if (
-                        riskVolumeValue.value.isNotEmpty() &&
-                        entryValue.value.isNotEmpty() &&
-                        stopLossValue.value.isNotEmpty()
-                    ){
-                        viewModel.changeAmountValue(
-                            riskCalculator(
-                                entryValue.value.toDouble(),
-                                stopLossValue.value.toDouble(),
-                                volume = riskVolumeValue.value.toInt()
+                    onClick = {
+                        if (
+                            riskVolumeValue.value.isNotEmpty() &&
+                            entryValue.value.isNotEmpty() &&
+                            stopLossValue.value.isNotEmpty()
+                        ) {
+                            viewModel.changeAmountValue(
+                                riskCalculator(
+                                    entryValue.value.toDouble(),
+                                    stopLossValue.value.toDouble(),
+                                    volume = riskVolumeValue.value.toInt()
+                                )
                             )
-                        )
-                        isAmountCalculated.value = true
-                    } },
+                            isAmountCalculated.value = true
+                        }
+                    },
                     content = {
                         Icon(
                             painter = painterResource(R.drawable.ic_refresh),

@@ -71,10 +71,29 @@ class TransactionsRepository @Inject constructor(private val dao: TransactionsDA
         try {
             dao.getMonths().collect {
                 emit(it)
-                Log.d("LocalLogging", "TransactionsRepositoryGetMonths: ${it.size},")
             }
         }catch (e: Exception){
             Log.d("LocalLogging", "TransactionsRepositoryGetMonths: ${e.message},")
+        }
+    }
+
+    override fun getMarkets(): Flow<List<String>> = flow {
+        try {
+            dao.getMarkets().collect {
+                emit(it)
+            }
+        }catch (e: Exception){
+            Log.d("LocalLogging", "TransactionsRepositoryGetMarkets: ${e.message},")
+        }
+    }
+
+    override fun getTransactionsByMarket(market: String): Flow<List<TransactionsModel>> = flow {
+        try {
+            dao.getTransactionsByMarket(market).collect {
+                emit(it)
+            }
+        }catch (e: Exception){
+            Log.d("LocalLogging", "TransactionsRepositoryGetTransactionsByMarket: ${e.message},")
         }
     }
 

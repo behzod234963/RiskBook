@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity("TransactionsModel")
 data class TransactionsModel(
     @PrimaryKey val id: Int = (0..999999).random(),
+    val market: String = "",
     val pair: String = "",
     val riskPercent: String = "",
     val riskVolume: Int = -1,

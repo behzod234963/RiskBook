@@ -2,16 +2,22 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "043482d5751cbe504f53f665426c284f",
+    "identityHash": "9d51e1090f6307c3a12e3c40ad1c1f22",
     "entities": [
       {
         "tableName": "TransactionsModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `pair` TEXT NOT NULL, `riskPercent` TEXT NOT NULL, `riskVolume` INTEGER NOT NULL, `entryPrice` REAL NOT NULL, `stopLoss` REAL NOT NULL, `takeProfit` REAL NOT NULL, `position` INTEGER NOT NULL, `margin` REAL NOT NULL, `leverage` TEXT NOT NULL, `amount` REAL NOT NULL, `commentForEntry` TEXT NOT NULL, `commentForTakeProfit` TEXT NOT NULL, `finalConclusion` TEXT NOT NULL, `profit` REAL NOT NULL, `dateAdded` TEXT NOT NULL, `month` INTEGER NOT NULL, `year` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `market` TEXT NOT NULL, `pair` TEXT NOT NULL, `riskPercent` TEXT NOT NULL, `riskVolume` INTEGER NOT NULL, `entryPrice` REAL NOT NULL, `stopLoss` REAL NOT NULL, `takeProfit` REAL NOT NULL, `position` INTEGER NOT NULL, `margin` REAL NOT NULL, `leverage` TEXT NOT NULL, `amount` REAL NOT NULL, `commentForEntry` TEXT NOT NULL, `commentForTakeProfit` TEXT NOT NULL, `finalConclusion` TEXT NOT NULL, `profit` REAL NOT NULL, `dateAdded` TEXT NOT NULL, `month` INTEGER NOT NULL, `year` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "market",
+            "columnName": "market",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -127,7 +133,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '043482d5751cbe504f53f665426c284f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9d51e1090f6307c3a12e3c40ad1c1f22')"
     ]
   }
 }

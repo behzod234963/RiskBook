@@ -53,7 +53,7 @@ fun MonthlyTransactionsItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                painter = if ( model.position ) painterResource(R.drawable.ic_trend_up) else painterResource(R.drawable.ic_trend_down),
+                painter = if ( model.position) painterResource(R.drawable.ic_trend_up) else painterResource(R.drawable.ic_trend_down),
                 tint = borderColor,
                 contentDescription = ""
             )

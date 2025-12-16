@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val transactionsRepository: TransactionsRepository,
+    private val repository: TransactionsRepository,
 ) : ViewModel() {
 
     private val _transactions = mutableStateOf(emptyList<TransactionsModel>())
@@ -23,31 +23,55 @@ class MainViewModel @Inject constructor(
     val points = mutableStateListOf<Point>()
     val labels = mutableStateListOf<String>()
     private val _steps = mutableIntStateOf(0)
+    private val _tabs = mutableStateListOf<String>()
+    val tabs : List<String> = _tabs
 
     init {
         getTransactions()
-    }
-
-    fun formatPoints() {
-        points.clear()
-        labels.clear()
-        _steps.intValue = 0
-        transactions.value
-            .asReversed()
-            .forEach { model ->
-                _steps.intValue += 1
-                points.add(Point(_steps.intValue.toFloat(), model.profit.toFloat()))
-                labels.add(model.profit.toString())
-            }
+        getMarkets()
     }
 
     fun getTransactions() = viewModelScope.launch {
-        transactionsRepository.getTransactions().collect {
+        repository.getTransactions().collect {
             _transactions.value = it.sortedByDescending { value-> value.dateAdded }
+
+            points.clear()
+            labels.clear()
+            _steps.intValue = 0
+            transactions.value
+                .asReversed()
+                .forEach { model ->
+                    _steps.intValue += 1
+                    points.add(Point(_steps.intValue.toFloat(), model.profit.toFloat()))
+                    labels.add(model.profit.toString())
+                }
+        }
+    }
+    fun getTransactionsByMarket(market: String) = viewModelScope.launch {
+        repository.getTransactionsByMarket(market).collect {
+            _transactions.value = it.sortedByDescending { value-> value.dateAdded }
+
+            points.clear()
+            labels.clear()
+            _steps.intValue = 0
+            transactions.value
+                .asReversed()
+                .forEach { model ->
+                    _steps.intValue += 1
+                    points.add(Point(_steps.intValue.toFloat(),model.profit.toFloat()))
+                    labels.add(model.profit.toString())
+                }
+        }
+    }
+    fun getMarkets() = viewModelScope.launch {
+        repository.getMarkets().collect {
+            _tabs.clear()
+            _tabs.add("All")
+            _tabs.addAll(it)
         }
     }
 
     fun deleteTransaction(model: TransactionsModel) = viewModelScope.launch {
-        transactionsRepository.deleteTransaction(model)
+        repository.deleteTransaction(model)
     }
 }

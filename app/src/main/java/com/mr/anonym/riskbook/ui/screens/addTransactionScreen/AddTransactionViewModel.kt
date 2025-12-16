@@ -20,6 +20,8 @@ class AddTransactionViewModel @Inject constructor(
 ) : ViewModel() {
 
     //    String
+    private val _marketValue = mutableStateOf( "" )
+    val marketValue: State<String> = _marketValue
     private val _pairValue = mutableStateOf("")
     val pairValue: State<String> = _pairValue
     private val _riskPercentValue = mutableStateOf("")
@@ -77,6 +79,7 @@ class AddTransactionViewModel @Inject constructor(
                         _dateAdded.value = transactionsModel.dateAdded
                         _position.value = transactionsModel.position
                         _takeProfitValue.value = transactionsModel.takeProfit.toString()
+                        _marketValue.value = transactionsModel.market
                     }
                 }
             }
@@ -141,5 +144,8 @@ class AddTransactionViewModel @Inject constructor(
 
     fun changeTakeProfitValue(value: String) {
         _takeProfitValue.value = value
+    }
+    fun changeMarketValue(value: String){
+        _marketValue.value = value
     }
 }
