@@ -45,7 +45,7 @@ import com.mr.anonym.riskbook.data.model.TransactionsModel
 import com.mr.anonym.riskbook.presentation.managers.clipboardManager
 import com.mr.anonym.riskbook.presentation.managers.riskCalculator
 import com.mr.anonym.riskbook.ui.components.CircleButton
-import com.mr.anonym.riskbook.ui.components.ColorSelector
+import com.mr.anonym.riskbook.ui.components.colorSelector
 import com.mr.anonym.riskbook.ui.components.OutlinedTF
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -101,13 +101,13 @@ fun AddTransactionScreen(
 
 //    UI
     Scaffold(
-        containerColor = ColorSelector(0),
-        contentColor = ColorSelector(0),
+        containerColor = colorSelector(0),
+        contentColor = colorSelector(0),
         topBar = {
             AtTopBar(
-                containerColor = ColorSelector(4),
-                buttonColor = ColorSelector(5),
-                textColor = ColorSelector(1),
+                containerColor = colorSelector(4),
+                buttonColor = colorSelector(5),
+                textColor = colorSelector(1),
                 fontFamily = saibaFont,
                 title = pairValue.value,
                 onBackClick = { navController.navigateUp() },
@@ -182,9 +182,9 @@ fun AddTransactionScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp),
-                containerColor = ColorSelector(0),
-                textColor = ColorSelector(1),
-                borderColor = ColorSelector(1),
+                containerColor = colorSelector(0),
+                textColor = colorSelector(1),
+                borderColor = colorSelector(1),
                 fontFamily = iosFont,
                 isNumberField = false,
                 showTrailingIcon = true,
@@ -207,9 +207,9 @@ fun AddTransactionScreen(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
                         .height(60.dp),
-                    containerColor = ColorSelector(0),
-                    textColor = ColorSelector(1),
-                    borderColor = ColorSelector(1),
+                    containerColor = colorSelector(0),
+                    textColor = colorSelector(1),
+                    borderColor = colorSelector(1),
                     fontFamily = iosFont,
                     isNumberField = true,
                     showTrailingIcon = false,
@@ -223,9 +223,9 @@ fun AddTransactionScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp),
-                    containerColor = ColorSelector(0),
-                    textColor = ColorSelector(1),
-                    borderColor = ColorSelector(1),
+                    containerColor = colorSelector(0),
+                    textColor = colorSelector(1),
+                    borderColor = colorSelector(1),
                     fontFamily = iosFont,
                     isNumberField = true,
                     showTrailingIcon = false,
@@ -245,9 +245,9 @@ fun AddTransactionScreen(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
                         .height(60.dp),
-                    containerColor = ColorSelector(0),
-                    textColor = ColorSelector(1),
-                    borderColor = ColorSelector(1),
+                    containerColor = colorSelector(0),
+                    textColor = colorSelector(1),
+                    borderColor = colorSelector(1),
                     fontFamily = iosFont,
                     isNumberField = true,
                     showTrailingIcon = true,
@@ -261,9 +261,9 @@ fun AddTransactionScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp),
-                    containerColor = ColorSelector(0),
-                    textColor = ColorSelector(1),
-                    borderColor = ColorSelector(1),
+                    containerColor = colorSelector(0),
+                    textColor = colorSelector(1),
+                    borderColor = colorSelector(1),
                     fontFamily = iosFont,
                     isNumberField = true,
                     showTrailingIcon = true,
@@ -288,7 +288,7 @@ fun AddTransactionScreen(
                 ) {
                     Text(
                         text = "Position: ${if ( position.value ) "Long" else "Short"}",
-                        color = ColorSelector(1),
+                        color = colorSelector(1),
                         fontSize = 14.sp,
                         fontFamily = iosFont
                     )
@@ -298,12 +298,12 @@ fun AddTransactionScreen(
                             viewModel.changePosition(it)
                         },
                         colors = SwitchDefaults.colors(
-                            checkedTrackColor = ColorSelector(4),
-                            uncheckedTrackColor = ColorSelector(3),
-                            checkedThumbColor = ColorSelector(0),
-                            uncheckedThumbColor = ColorSelector(0),
-                            checkedBorderColor = ColorSelector(0),
-                            uncheckedBorderColor = ColorSelector(0)
+                            checkedTrackColor = colorSelector(4),
+                            uncheckedTrackColor = colorSelector(3),
+                            checkedThumbColor = colorSelector(0),
+                            uncheckedThumbColor = colorSelector(0),
+                            checkedBorderColor = colorSelector(0),
+                            uncheckedBorderColor = colorSelector(0)
                         ),
                     )
                 }
@@ -312,9 +312,9 @@ fun AddTransactionScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp),
-                    containerColor = ColorSelector(0),
-                    textColor = ColorSelector(1),
-                    borderColor = ColorSelector(1  ),
+                    containerColor = colorSelector(0),
+                    textColor = colorSelector(1),
+                    borderColor = colorSelector(1  ),
                     fontFamily = iosFont,
                     isNumberField = true,
                     showTrailingIcon = true,
@@ -334,9 +334,9 @@ fun AddTransactionScreen(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
                         .height(60.dp),
-                    containerColor = ColorSelector(0),
-                    textColor = ColorSelector(1),
-                    borderColor = ColorSelector(1),
+                    containerColor = colorSelector(0),
+                    textColor = colorSelector(1),
+                    borderColor = colorSelector(1),
                     fontFamily = iosFont,
                     isNumberField = true,
                     showTrailingIcon = true,
@@ -350,9 +350,9 @@ fun AddTransactionScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(60.dp),
-                    containerColor = ColorSelector(0),
-                    textColor = ColorSelector(1),
-                    borderColor = ColorSelector(1  ),
+                    containerColor = colorSelector(0),
+                    textColor = colorSelector(1),
+                    borderColor = colorSelector(1  ),
                     fontFamily = iosFont,
                     isNumberField = true,
                     showTrailingIcon = false,
@@ -367,21 +367,21 @@ fun AddTransactionScreen(
             Text(
                 text = pairValue.value,
                 fontSize = 16.sp,
-                color = ColorSelector(4),
+                color = colorSelector(4),
                 fontFamily = iosFont
             )
             Spacer(Modifier.height(15.dp))
 //                Risk
             Text(
                 text = "Risk: ${riskPercentValue.value} %",
-                color = ColorSelector(4),
+                color = colorSelector(4),
                 fontSize = 16.sp,
                 fontFamily = iosFont
             )
 //                Risk volume
             Text(
                 text = "Risk volume: ${riskVolumeValue.value} USDT",
-                color = ColorSelector(4),
+                color = colorSelector(4),
                 fontSize = 16.sp,
                 fontFamily = iosFont
             )
@@ -389,28 +389,28 @@ fun AddTransactionScreen(
 //            Position
             Text(
                 text = "Position: ${if ( position.value ) "Long" else "Short"}",
-                color = ColorSelector(4),
+                color = colorSelector(4),
                 fontSize = 16.sp,
                 fontFamily = iosFont
             )
 //                Entry
             Text(
                 text = "Entry price: ${entryValue.value}",
-                color = ColorSelector(4),
+                color = colorSelector(4),
                 fontSize = 16.sp,
                 fontFamily = iosFont
             )
 //                Stop-loss
             Text(
                 text = "Stop-loss: ${stopLossValue.value}",
-                color = ColorSelector(4),
+                color = colorSelector(4),
                 fontSize = 16.sp,
                 fontFamily = iosFont
             )
 //            Take-profit
             Text(
                 text = "Take-profit: ${takeProfitValue.value}",
-                color = ColorSelector(4),
+                color = colorSelector(4),
                 fontSize = 16.sp,
                 fontFamily = iosFont
             )
@@ -418,14 +418,14 @@ fun AddTransactionScreen(
 //                Margin
             Text(
                 text = "Margin: ${marginValue.value} USDT",
-                color = ColorSelector(4),
+                color = colorSelector(4),
                 fontSize = 16.sp,
                 fontFamily = iosFont
             )
 //                Leverage
             Text(
                 text = "Leverage: ${leverageValue.value} x",
-                color = ColorSelector(4),
+                color = colorSelector(4),
                 fontSize = 16.sp,
                 fontFamily = iosFont
             )
@@ -435,15 +435,15 @@ fun AddTransactionScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp)
-                    .border(width = 0.5.dp,color = ColorSelector(6),shape = RoundedCornerShape(15.dp))
-                    .background(color = ColorSelector(0), shape = RoundedCornerShape(15.dp))
+                    .border(width = 0.5.dp,color = colorSelector(6),shape = RoundedCornerShape(15.dp))
+                    .background(color = colorSelector(0), shape = RoundedCornerShape(15.dp))
                     .padding(10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = "Amount: ${amountValue.value.toString().take(8)}",
-                    color = ColorSelector(4),
+                    color = colorSelector(4),
                     fontSize = 22.sp,
                     fontFamily = iosFont
                 )
@@ -454,7 +454,7 @@ fun AddTransactionScreen(
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_copy),
-                        tint = ColorSelector(4),
+                        tint = colorSelector(4),
                         contentDescription = "Copy to clipboard"
                     )
                 }
@@ -466,7 +466,7 @@ fun AddTransactionScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CircleButton(
-                    buttonColor = ColorSelector(4),
+                    buttonColor = colorSelector(4),
                     interactionSource = refreshButtonInteractionSource,
                     scale = scale,
                     onClick = { if (
@@ -486,7 +486,7 @@ fun AddTransactionScreen(
                     content = {
                         Icon(
                             painter = painterResource(R.drawable.ic_refresh),
-                            tint = ColorSelector(1),
+                            tint = colorSelector(1),
                             contentDescription = ""
                         )
                     }
@@ -497,9 +497,9 @@ fun AddTransactionScreen(
             OutlinedTF(
                 modifier = Modifier
                     .fillMaxWidth(),
-                containerColor = ColorSelector(0),
-                textColor = ColorSelector(1),
-                borderColor = ColorSelector(2),
+                containerColor = colorSelector(0),
+                textColor = colorSelector(1),
+                borderColor = colorSelector(2),
                 fontFamily = iosFont,
                 isNumberField = false,
                 showTrailingIcon = true,
@@ -513,9 +513,9 @@ fun AddTransactionScreen(
             OutlinedTF(
                 modifier = Modifier
                     .fillMaxWidth(),
-                containerColor = ColorSelector(0),
-                textColor = ColorSelector(1),
-                borderColor = ColorSelector(2),
+                containerColor = colorSelector(0),
+                textColor = colorSelector(1),
+                borderColor = colorSelector(2),
                 fontFamily = iosFont,
                 isNumberField = false,
                 showTrailingIcon = true,
@@ -529,9 +529,9 @@ fun AddTransactionScreen(
             OutlinedTF(
                 modifier = Modifier
                     .fillMaxWidth(),
-                containerColor = ColorSelector(0),
-                textColor = ColorSelector(1),
-                borderColor = ColorSelector(2),
+                containerColor = colorSelector(0),
+                textColor = colorSelector(1),
+                borderColor = colorSelector(2),
                 fontFamily = iosFont,
                 isNumberField = false,
                 showTrailingIcon = true,
@@ -544,9 +544,9 @@ fun AddTransactionScreen(
             OutlinedTF(
                 modifier = Modifier
                     .fillMaxWidth(),
-                containerColor = ColorSelector(0),
-                textColor = ColorSelector(1),
-                borderColor = ColorSelector(2),
+                containerColor = colorSelector(0),
+                textColor = colorSelector(1),
+                borderColor = colorSelector(2),
                 fontFamily = iosFont,
                 isNumberField = true,
                 showTrailingIcon = true,

@@ -18,7 +18,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mr.anonym.riskbook.R
 import com.mr.anonym.riskbook.presentation.navigation.ScreensRouter
-import com.mr.anonym.riskbook.ui.components.ColorSelector
+import com.mr.anonym.riskbook.ui.components.colorSelector
 import com.mr.anonym.riskbook.ui.components.LineChart
 
 @Composable
@@ -43,12 +43,12 @@ fun MainScreen(
         activity?.finish()
     }
     Scaffold(
-        containerColor = ColorSelector(0),
-        contentColor = ColorSelector(0),
+        containerColor = colorSelector(0),
+        contentColor = colorSelector(0),
         topBar = {
             MainScreenTopBar(
-                containerColor = ColorSelector(4),
-                textColor = ColorSelector(1),
+                containerColor = colorSelector(4),
+                textColor = colorSelector(1),
                 fontFamily = saibaFont,
                 title = stringResource(R.string.app_name),
                 onAnalyticsScreen = { navController.navigate(ScreensRouter.AnalyticsScreen.route) },
@@ -69,7 +69,7 @@ fun MainScreen(
                 item {
                     if ( points.isNotEmpty()){
                         LineChart(
-                            backgroundColor = ColorSelector(4),
+                            backgroundColor = colorSelector(4),
                             points = points,
                             labels
                         )
@@ -77,11 +77,11 @@ fun MainScreen(
                 }
                 items(transactions.value){ model->
                     MainScreenItem(
-                        backgroundColor = ColorSelector(1),
-                        borderColor = if ( model.position ) ColorSelector(4) else ColorSelector(3),
-                        textColor = ColorSelector(0),
-                        profitColor = if (model.profit.toString().startsWith('-')) ColorSelector(3)
-                        else ColorSelector(4),
+                        backgroundColor = colorSelector(1),
+                        borderColor = if ( model.position ) colorSelector(4) else colorSelector(3),
+                        textColor = colorSelector(0),
+                        profitColor = if (model.profit.toString().startsWith('-')) colorSelector(3)
+                        else colorSelector(4),
                         fontFamily = iosFont,
                         model = model,
                         onClick = { navController.navigate(ScreensRouter.AddTransactionScreen.route + "/${model.id}") },

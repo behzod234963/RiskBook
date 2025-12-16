@@ -94,6 +94,8 @@ dependencies {
 //    Ychart
     implementation(libs.yChart)
 
-//    AayChart
-    implementation(libs.aayChart)
+//    Vico charts
+    implementation(libs.vicoCompose)
+    implementation(libs.vicoComposeM3)
+    implementation(libs.vico)
 }

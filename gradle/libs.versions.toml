@@ -19,7 +19,7 @@ roomVersion = "2.8.4"
 lottieVersion = "6.7.1"
 kspVersion = "2.2.20-2.0.2"
 yChartVersion = "2.1.0"
-aayChartVersion = "1.1.0"
+vicoVersion = "1.14.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -67,8 +67,10 @@ lottieanimations = {group = "com.airbnb.android",name = "lottie-compose",version
 #  Ychart
 yChart = { group = "co.yml" , name = "ycharts" , version.ref = "yChartVersion" }
 
-#  AayChart
-aayChart = { group = "io.github.thechance101" , name = "chart" , version.ref = "aayChartVersion" }
+#  Vico chart
+vicoCompose = { group = "com.patrykandpatrick.vico" , name = "compose" , version.ref = "vicoVersion" }
+vicoComposeM3 = { group = "com.patrykandpatrick.vico" , name = "compose-m3" , version.ref = "vicoVersion" }
+vico = { group = "com.patrykandpatrick.vico" , name = "core" , version.ref = "vicoVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

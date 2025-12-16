@@ -7,7 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.mr.anonym.riskbook.data.instance.SharedPreferenceInstance
 
 @Composable
-fun ColorSelector(index: Int): Color {
+fun colorSelector(index: Int): Color {
 
 //    Context
     val context = LocalContext.current
@@ -18,7 +18,7 @@ fun ColorSelector(index: Int): Color {
     val isSystemTheme = sharedPrefs.systemThemeState()
     val isDarkTheme = sharedPrefs.darkThemeState()
 
-//    ColorSelector
+//    colorSelector
     val systemPrimaryColor = if (isSystemInDarkTheme()) Color.Black else Color.White // 0 //
     val systemSecondaryColor = if (isSystemInDarkTheme()) Color.White else Color.Black // 1 //
     val systemTertiaryColor = if (isSystemInDarkTheme()) Color.DarkGray else Color.LightGray // 2 //
@@ -57,7 +57,6 @@ fun ColorSelector(index: Int): Color {
         }
 //        Green
         4->{
-
             Color(101, 163, 119, 255)
         }
 //        Blue

@@ -1,51 +1,48 @@
 package com.mr.anonym.riskbook.ui.components
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
-import com.aay.compose.barChart.BarChart
-import com.aay.compose.barChart.model.BarParameters
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.toArgb
+import com.patrykandpatrick.vico.compose.axis.horizontal.rememberBottomAxis
+import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
+import com.patrykandpatrick.vico.compose.chart.Chart
+import com.patrykandpatrick.vico.compose.chart.column.columnChart
+import com.patrykandpatrick.vico.core.component.shape.LineComponent
+import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
+import com.patrykandpatrick.vico.core.entry.FloatEntry
 
 @Composable
 fun VerticalBarChart(
-    textColor: Color,
-    bars: List<BarParameters>
+    profits: List<Float>,
+    labels: List<String>
 ) {
-    BarChart(
-        chartParameters = bars,
-        isShowGrid = true,
-        animateChart = true,
-        showGridWithSpacer = true,
-        xAxisStyle = TextStyle(
-            fontSize = 16.sp,
-            color = textColor
-        )
-    )
-}
 
-@Preview
-@Composable
-private fun PreviewVerticalBarChart() {
-    VerticalBarChart(
-        textColor = Color.White,
-        bars = listOf(
-            BarParameters(
-                dataName = "Jan",
-                data = listOf(10.0),
-                barColor = Color.Green
-            ),
-            BarParameters(
-                dataName = "Jan",
-                data = listOf(20.0),
-                barColor = Color.Green
-            ),
-            BarParameters(
-                dataName = "Jan",
-                data = listOf(30.0),
-                barColor = Color.Green
-            ),
+    if ( profits.isEmpty() || labels.isEmpty() ) return
+
+    val modelProducer = remember { ChartEntryModelProducer() }
+
+    LaunchedEffect(profits) {
+        val entries = profits.mapIndexed { index, value ->
+            FloatEntry(index.toFloat(), value)
+        }
+        modelProducer.setEntries(entries)
+    }
+    Chart(
+        chart = columnChart(
+            columns = listOf(
+                LineComponent(
+                    thicknessDp = 2f,
+                    color = colorSelector(4).toArgb(),
+                )
+            )
+        ),
+        chartModelProducer = modelProducer,
+        startAxis = rememberStartAxis(),
+        bottomAxis = rememberBottomAxis(
+            valueFormatter = { value,_->
+                labels.getOrNull(value.toInt()) ?:""
+            }
         ),
     )
 }
