@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class AddTransactionViewModel @Inject constructor(
     savedState: SavedStateHandle,
-    private val transactionsRepository: TransactionsRepository,
+    private val repository: TransactionsRepository,
 ) : ViewModel() {
 
     //    String
@@ -57,13 +57,18 @@ class AddTransactionViewModel @Inject constructor(
     private val _id = mutableIntStateOf(-1)
     val id: State<Int> = _id
 
+//    List
+    private val _markets = mutableStateOf( emptyList<String>() )
+    val markets: State<List<String>> = _markets
+
     //    Business-logic
     init {
+        getMarkets()
         savedState.get<Int>("id")?.let {
             _id.intValue = it
             if (it != -1) {
                 viewModelScope.launch {
-                    transactionsRepository.getTransaction(it).collect { transactionsModel ->
+                    repository.getTransaction(it).collect { transactionsModel ->
                         _pairValue.value = transactionsModel.pair
                         _riskPercentValue.value = transactionsModel.riskPercent
                         _riskVolumeValue.value = transactionsModel.riskVolume.toString()
@@ -86,8 +91,14 @@ class AddTransactionViewModel @Inject constructor(
         }
     }
 
+    fun getMarkets() = viewModelScope.launch {
+        repository.getMarkets().collect {
+            _markets.value = it
+        }
+    }
+
     fun insertTransaction(model: TransactionsModel) = viewModelScope.launch {
-        transactionsRepository.insertTransaction(model)
+        repository.insertTransaction(model)
     }
 
     fun changePairValue(value: String) {

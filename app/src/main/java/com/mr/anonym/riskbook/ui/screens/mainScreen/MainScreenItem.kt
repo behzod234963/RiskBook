@@ -101,5 +101,4 @@ fun MainScreenItem(
             }
         }
     }
-//    Spacer(Modifier.height(10.dp))
 }

@@ -8,7 +8,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.mr.anonym.riskbook.ui.screens.addTransactionScreen.AddTransactionScreen
 import com.mr.anonym.riskbook.ui.screens.analyticsScreen.AnalyticsScreen
+import com.mr.anonym.riskbook.ui.screens.calculatorScreen.CalculatorScreen
 import com.mr.anonym.riskbook.ui.screens.mainScreen.MainScreen
+import com.mr.anonym.riskbook.ui.screens.conclusionsScreen.ConclusionsScreen
 
 @Composable
 fun NavGraph() {
@@ -19,9 +21,7 @@ fun NavGraph() {
         navController = navController,
         startDestination = ScreensRouter.MainScreen.route
     ){
-        composable (ScreensRouter.MainScreen.route){
-            MainScreen(navController)
-        }
+        composable (ScreensRouter.MainScreen.route){ MainScreen(navController) }
         composable (
             route = ScreensRouter.AddTransactionScreen.route + "/{id}",
             arguments = listOf(
@@ -34,8 +34,8 @@ fun NavGraph() {
             val id = entry.arguments?.getInt("id")?:-1
             AddTransactionScreen(id, navController)
         }
-        composable (ScreensRouter.AnalyticsScreen.route){
-            AnalyticsScreen(navController)
-        }
+        composable (ScreensRouter.AnalyticsScreen.route){ AnalyticsScreen(navController) }
+        composable(ScreensRouter.CalculatorScreen.route) { CalculatorScreen(navController) }
+        composable (ScreensRouter.ConclusionsScreen.route){ ConclusionsScreen(navController) }
     }
 }

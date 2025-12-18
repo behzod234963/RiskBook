@@ -59,6 +59,7 @@ fun MarketTabRow(
                             fontWeight = FontWeight.SemiBold,
                             fontFamily = fontFamily
                         )
+                        Spacer(Modifier.width(15.dp))
                     }
                     Spacer(Modifier.height(10.dp))
                 }

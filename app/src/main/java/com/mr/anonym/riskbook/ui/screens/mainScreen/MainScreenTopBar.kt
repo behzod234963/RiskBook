@@ -27,6 +27,8 @@ fun MainScreenTopBar(
     textColor: Color,
     fontFamily: FontFamily,
     title: String,
+    onRulesClick:()-> Unit,
+    onCalculatorClick:()-> Unit,
     onAnalyticsScreen:()->Unit,
     onAddClick:()-> Unit
 ) {
@@ -46,6 +48,24 @@ fun MainScreenTopBar(
                     .fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                IconButton(
+                    onClick = { onCalculatorClick() }
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_calculator),
+                        tint = textColor,
+                        contentDescription = "Risk calculator"
+                    )
+                }
+                IconButton(
+                    onClick = { onRulesClick() }
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_rules),
+                        tint = textColor,
+                        contentDescription = "go ro rules"
+                    )
+                }
                 IconButton(
                     onClick = { onAnalyticsScreen() }
                 ) {

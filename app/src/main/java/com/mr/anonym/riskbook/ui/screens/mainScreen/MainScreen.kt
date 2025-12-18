@@ -12,7 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -35,7 +35,7 @@ fun MainScreen(
     val activity = LocalActivity.current
 
 //    Int
-    val selectedTabIndex = remember { mutableStateOf( 0 ) }
+    val selectedTabIndex = remember { mutableIntStateOf( 0 ) }
 
 //    List
     val transactions = viewModel.transactions
@@ -60,9 +60,10 @@ fun MainScreen(
                 textColor = colorSelector(1),
                 fontFamily = saibaFont,
                 title = stringResource(R.string.app_name),
-                onAnalyticsScreen = { navController.navigate(ScreensRouter.AnalyticsScreen.route) },
-                onAddClick = { navController.navigate(ScreensRouter.AddTransactionScreen.route + "/-1") }
-            )
+                onRulesClick = { navController.navigate(ScreensRouter.ConclusionsScreen.route) },
+                onCalculatorClick = { navController.navigate(ScreensRouter.CalculatorScreen.route) },
+                onAnalyticsScreen = { navController.navigate(ScreensRouter.AnalyticsScreen.route) }
+            ) { navController.navigate(ScreensRouter.AddTransactionScreen.route + "/-1") }
         }
     ) { paddingValues ->
         Column(
@@ -83,11 +84,11 @@ fun MainScreen(
                 textColor = colorSelector(1),
                 selectedTabColor = colorSelector(6),
                 fontFamily = iosFont,
-                selectedTabIndex = selectedTabIndex.value,
+                selectedTabIndex = selectedTabIndex.intValue,
                 tabs = tabs,
                 onClick = {
-                    selectedTabIndex.value = it
-                    if ( selectedTabIndex.value == 0 ){
+                    selectedTabIndex.intValue = it
+                    if ( selectedTabIndex.intValue == 0 ){
                         viewModel.getTransactions()
                     }else{
                         viewModel.getTransactionsByMarket(tabs[it])
