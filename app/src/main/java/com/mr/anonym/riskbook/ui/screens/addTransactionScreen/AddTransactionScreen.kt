@@ -96,13 +96,15 @@ fun AddTransactionScreen(
                             pairValue.value.isNotEmpty() &&
                             marketValue.value.isNotEmpty()
                         ) {
-                            viewModel.changeAmountValue(
-                                riskCalculator(
-                                    entry = entryValue.value.toDouble(),
-                                    stopLoss = stopLossValue.value.toDouble(),
-                                    volume = riskVolumeValue.value.toInt()
+                            if (entryValue.value.isNotEmpty() && stopLossValue.value.isNotEmpty() && riskVolumeValue.value.isNotEmpty()) {
+                                viewModel.changeAmountValue(
+                                    riskCalculator(
+                                        entry = entryValue.value.toDouble(),
+                                        stopLoss = stopLossValue.value.toDouble(),
+                                        volume = riskVolumeValue.value.toInt()
+                                    )
                                 )
-                            )
+                            }
                             val factory =
                                 SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
                             val currentDate = factory.format(calendarInstance.time)
@@ -135,13 +137,15 @@ fun AddTransactionScreen(
                             pairValue.value.isNotEmpty() &&
                             marketValue.value.isNotEmpty()
                         ) {
-                            viewModel.changeAmountValue(
-                                riskCalculator(
-                                    entry = entryValue.value.toDouble(),
-                                    stopLoss = stopLossValue.value.toDouble(),
-                                    volume = riskVolumeValue.value.toInt()
+                            if (entryValue.value.isNotEmpty() && stopLossValue.value.isNotEmpty() && riskVolumeValue.value.isNotEmpty()) {
+                                viewModel.changeAmountValue(
+                                    riskCalculator(
+                                        entry = entryValue.value.toDouble(),
+                                        stopLoss = stopLossValue.value.toDouble(),
+                                        volume = riskVolumeValue.value.toInt()
+                                    )
                                 )
-                            )
+                            }
                             val month = calendarInstance.get(Calendar.MONTH)
                             viewModel.insertTransaction(
                                 TransactionsModel(
@@ -182,7 +186,7 @@ fun AddTransactionScreen(
                 .imePadding()
         ) {
             LazyRow {
-                items(markets.value){ model->
+                items(markets.value) { model ->
                     MarketsItem(
                         backgroundColor = colorSelector(6),
                         textColor = colorSelector(1),

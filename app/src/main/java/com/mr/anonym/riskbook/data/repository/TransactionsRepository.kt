@@ -37,7 +37,7 @@ class TransactionsRepository @Inject constructor(private val dao: TransactionsDA
         }
     }
 
-    override fun getYearlyTransactions(year: Int): Flow<List<MonthlyProfit>> = flow {
+    override fun getYearlyTransactions(year: Int): Flow<List<MonthlyProfit>> = flow{
         try {
             dao.getYearlyTransactions(year).collect {
                 emit(it)
