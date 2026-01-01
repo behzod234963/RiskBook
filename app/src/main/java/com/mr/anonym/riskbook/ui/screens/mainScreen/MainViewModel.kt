@@ -33,7 +33,7 @@ class MainViewModel @Inject constructor(
 
     fun getTransactions() = viewModelScope.launch {
         repository.getTransactions().collect {
-            _transactions.value = it.sortedByDescending { value-> value.dateAdded }
+            _transactions.value = it.sortedBy { value-> value.dateAdded }
 
             points.clear()
             labels.clear()
