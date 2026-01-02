@@ -22,11 +22,13 @@ interface TransactionsDAO {
     fun getTransaction(id: Int): Flow<TransactionsModel>
 
     @Query("""
-        SELECT *, SUM(profit) AS totalProfit
-         FROM transactionsmodel
-         WHERE year = :year
-          GROUP BY month 
-          ORDER BY month""")
+        SELECT 
+            month,
+            SUM(profit) AS totalProfit
+        FROM transactionsmodel
+        WHERE year = :year
+        GROUP BY month 
+         ORDER BY month""")
     fun getYearlyTransactions(year: Int): Flow<List<MonthlyProfit>>
 
     @Query("SELECT year FROM transactionsmodel GROUP BY year")

@@ -11,6 +11,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -20,9 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mr.anonym.riskbook.R
+import com.mr.anonym.riskbook.presentation.extensions.monthConverter
 import com.mr.anonym.riskbook.presentation.navigation.ScreensRouter
-import com.mr.anonym.riskbook.ui.components.colorSelector
 import com.mr.anonym.riskbook.ui.components.VerticalBarChart
+import com.mr.anonym.riskbook.ui.components.colorSelector
 
 @Composable
 fun AnalyticsScreen(
@@ -39,8 +42,9 @@ fun AnalyticsScreen(
     val selectedTabIndex = remember { mutableStateOf(month.value) }
 
 //    List
-    val profits = viewModel.profits
-    val labels = viewModel.labels
+    val yearly by viewModel.yearlyTransactions.collectAsState()
+    val profits = yearly.map { it.totalProfit.toFloat() }
+    val labels = yearly.map { it.month.monthConverter() }
     val years = viewModel.years
     val months = viewModel.months
     val monthlyTransactions = viewModel.monthlyTransactions
@@ -49,6 +53,7 @@ fun AnalyticsScreen(
     val saibaFontFamily = FontFamily(Font(R.font.saiba))
     val iosFont = FontFamily(Font(R.font.ios_font))
 
+//    UI
     Scaffold(
         containerColor = colorSelector(0),
         contentColor = colorSelector(0),

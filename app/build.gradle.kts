@@ -16,8 +16,8 @@ android {
         applicationId = "com.mr.anonym.riskbook"
         minSdk = 26
         targetSdk = 36
-        versionCode = 6
-        versionName = "1.6"
+        versionCode = 13
+        versionName = "13"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
