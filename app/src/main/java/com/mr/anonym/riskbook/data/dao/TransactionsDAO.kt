@@ -15,7 +15,11 @@ interface TransactionsDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransaction(model: TransactionsModel)
 
-    @Query("SELECT * FROM transactionsmodel")
+    @Query("""
+        SELECT * FROM transactionsmodel
+        ORDER BY dateAdded
+        """
+    )
     fun getTransactions(): Flow<List<TransactionsModel>>
 
     @Query("SELECT * FROM transactionsmodel WHERE id = :id")

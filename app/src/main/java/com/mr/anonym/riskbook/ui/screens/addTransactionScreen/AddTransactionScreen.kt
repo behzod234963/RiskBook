@@ -45,6 +45,9 @@ fun AddTransactionScreen(
 //    Objects
     val calendarInstance = Calendar.getInstance()
 
+//    Booleans
+    val position = viewModel.position
+
 //    String
     val marketValue = viewModel.marketValue
     val pairValue = viewModel.pairValue
@@ -60,7 +63,6 @@ fun AddTransactionScreen(
     val profitValue = viewModel.profitValue
     val amountValue = viewModel.amountValue
     val dateAdded = viewModel.dateAdded
-    val position = viewModel.position
     val takeProfitValue = viewModel.takeProfitValue
 
 //    Int
@@ -70,6 +72,7 @@ fun AddTransactionScreen(
 
 //    List
     val markets = viewModel.markets
+    val transactions = viewModel.transactions
 
 //    Font
     val saibaFont = FontFamily(Font(R.font.saiba))
@@ -198,7 +201,6 @@ fun AddTransactionScreen(
                     )
                 }
             }
-            Spacer(Modifier.height(10.dp))
 //            Market field
             OutlinedTF(
                 modifier = Modifier
@@ -217,6 +219,19 @@ fun AddTransactionScreen(
                 onTrailingClick = { viewModel.changeMarketValue("") }
             )
             Spacer(Modifier.height(15.dp))
+            LazyRow {
+                items(transactions.value){ model->
+                    MarketsItem(
+                        backgroundColor = colorSelector(6),
+                        textColor = colorSelector(1),
+                        fontFamily = iosFont,
+                        model = model.pair,
+                        onClick = {
+                            viewModel.changePairValue(model.pair)
+                        }
+                    )
+                }
+            }
 //            Transaction pair field
             OutlinedTF(
                 modifier = Modifier

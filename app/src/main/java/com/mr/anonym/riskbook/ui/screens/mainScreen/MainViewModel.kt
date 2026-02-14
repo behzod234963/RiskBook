@@ -33,9 +33,7 @@ class MainViewModel @Inject constructor(
 
     fun getTransactions() = viewModelScope.launch {
         repository.getTransactions().collect {
-            _transactions.value = it.sortedWith(
-                compareByDescending <TransactionsModel>{ value-> value.year }.thenByDescending { child-> child.dateAdded }
-            )
+            _transactions.value = it
 
             points.clear()
             labels.clear()
@@ -51,9 +49,7 @@ class MainViewModel @Inject constructor(
     }
     fun getTransactionsByMarket(market: String) = viewModelScope.launch {
         repository.getTransactionsByMarket(market).collect {
-            _transactions.value = it.sortedWith(
-                compareByDescending <TransactionsModel>{ value-> value.year }.thenByDescending { child-> child.dateAdded }
-            )
+            _transactions.value = it
 
             points.clear()
             labels.clear()

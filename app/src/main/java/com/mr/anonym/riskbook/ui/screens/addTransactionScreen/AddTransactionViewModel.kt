@@ -60,10 +60,13 @@ class AddTransactionViewModel @Inject constructor(
 //    List
     private val _markets = mutableStateOf( emptyList<String>() )
     val markets: State<List<String>> = _markets
+    private val _transactions = mutableStateOf( emptyList<TransactionsModel>() )
+    val transactions: State<List<TransactionsModel>> = _transactions
 
     //    Business-logic
     init {
         getMarkets()
+        getTransactions()
         savedState.get<Int>("id")?.let {
             _id.intValue = it
             if (it != -1) {
@@ -94,6 +97,11 @@ class AddTransactionViewModel @Inject constructor(
     fun getMarkets() = viewModelScope.launch {
         repository.getMarkets().collect {
             _markets.value = it
+        }
+    }
+    fun getTransactions() = viewModelScope.launch {
+        repository.getTransactions().collect {
+            _transactions.value = it
         }
     }
 
